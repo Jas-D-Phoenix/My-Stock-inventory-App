@@ -3,6 +3,9 @@ from .import views
 
 urlpatterns = [
     path('', views.home, name="home"),
+    path('register', views.register_page, name="register"),
+    path('logout', views.logout_user, name="logout"),
+    path('login', views.login_page, name="login"),
     path('stock_list', views.stock_list, name="stock_list"),
     path('add_stock', views.add_stock, name="add_stock"),
     path('update_stock/<str:pk>/', views.update_stock, name="update_stock"),

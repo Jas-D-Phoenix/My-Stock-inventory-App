@@ -4,8 +4,13 @@ from django.http import HttpResponse
 import csv
 from .forms import *
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from .forms import LoginForm
 
 
+@login_required(login_url='login')
 def home(request):
     title = "Home Page"
     context = {
@@ -14,6 +19,52 @@ def home(request):
     return render(request, "home.html", context)
 
 
+def register_page(request):
+    if request.user.is_authenticated:
+        return redirect('login')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, "Account created for" + user)
+                return redirect("login")
+
+    context = {
+        "form": form
+    }
+    return render(request, "register.html", context)
+
+
+def login_page(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        if request.method == "POST":
+            form = LoginForm(request, data=request.POST)
+            if form.is_valid():
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+                user = authenticate(request, username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    messages.error(request, "Credentials are not correct")
+        else:
+            form = LoginForm()
+
+    return render(request, "login.html", {'form': form})
+
+
+def logout_user(request):
+    logout(request)
+    return redirect("login")
+
+
+@login_required(login_url='login')
 def stock_list(request):
     stock = Stock.objects.all()
     form = SearchForm(request.POST or None)
@@ -44,6 +95,7 @@ def stock_list(request):
     return render(request, "stock_list.html", context)
 
 
+@login_required(login_url='login')
 def add_stock(request):
     form = StockForm(request.POST or None)
     if form.is_valid():
@@ -56,6 +108,7 @@ def add_stock(request):
     return render(request, "add_stock.html", context)
 
 
+@login_required(login_url='login')
 def update_stock(request, pk):
     stock = Stock.objects.get(id=pk)
     form = StockUpdate(instance=stock)
@@ -71,6 +124,7 @@ def update_stock(request, pk):
     return render(request, 'stock_update.html', context)
 
 
+@login_required(login_url='login')
 def delete_stock(request, pk):
     stock = Stock.objects.get(id=pk)
     if request.method == "POST":
@@ -80,6 +134,7 @@ def delete_stock(request, pk):
     return render(request, 'delete_stock.html')
 
 
+@login_required(login_url='login')
 def stock_info(request, pk):
     stock = Stock.objects.get(id=pk)
     context = {
@@ -88,6 +143,7 @@ def stock_info(request, pk):
     return render(request, 'stock_info.html', context)
 
 
+@login_required(login_url='login')
 def sale_stock(request, pk):
     stock = Stock.objects.get(id=pk)
     form = StockSell(request.POST or None, instance=stock)
@@ -105,6 +161,7 @@ def sale_stock(request, pk):
     return render(request, 'add_stock.html',context)
 
 
+@login_required(login_url='login')
 def purchase_stock(request, pk):
     stock = Stock.objects.get(id=pk)
     form = StockPurchase(request.POST or None, instance=stock)
@@ -120,6 +177,7 @@ def purchase_stock(request, pk):
     return render(request, 'add_stock.html',context)
 
 
+@login_required(login_url='login')
 def reorder_level(request, pk):
     stock = Stock.objects.get(id=pk)
     form = ReorderLevel(request.POST or None, instance=stock)
@@ -135,6 +193,7 @@ def reorder_level(request, pk):
     return render(request, "add_stock.html", context)
 
 
+@login_required(login_url='login')
 def stock_details(request):
     stock = StockDetails.objects.all()
     form = StockDetailsDateFilter(request.POST or None)

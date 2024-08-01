@@ -1,5 +1,8 @@
 from django import forms
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 
 
 class StockForm(forms.ModelForm):
@@ -71,3 +74,12 @@ class StockDetailsDateFilter(forms.ModelForm):
         fields = ["category", "stock_name", "start_date", "stop_date"]
 
 
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]
+
+
+class LoginForm(AuthenticationForm):
+    class Meta:
+        fields = ['username', 'password']
