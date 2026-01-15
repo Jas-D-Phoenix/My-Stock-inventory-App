@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: stock_inventory
+      MYSQL_USER: stock_user
+      MYSQL_PASSWORD: stock_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  web:
+    build: .
+    restart: always
+    environment:
+      - SECRET_KEY=your-secret-key-change-this-in-production
+      - DEBUG=False
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+      - DB_NAME=stock_inventory
+      - DB_USER=stock_user
+      - DB_PASSWORD=stock_password
+      - DB_HOST=db
+      - DB_PORT=3306
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - staticfiles:/app/staticfiles
+      - media:/app/media
+
+volumes:
+  mysql_data:
+  staticfiles:
+  media:
