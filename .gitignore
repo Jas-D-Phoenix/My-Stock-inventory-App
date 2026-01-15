@@ -154,3 +154,6 @@ media/
 
 # Docker
 .docker/
+
+# Secret keys
+SECRET_KEY.txt

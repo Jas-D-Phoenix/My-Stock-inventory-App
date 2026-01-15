@@ -285,12 +285,83 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">MISAKI</h1>
-
+        <h1 class="h2">Stock Inventory Management System</h1>
       </div>
 
-     <h1>HOME PAGE</h1>
-      <img src="{% static 'img/home.jpeg' %}">
+      <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+        <h1 class="display-4">Welcome to Stock Inventory App</h1>
+        <p class="lead">A comprehensive Django-based inventory management system for tracking stock, sales, and purchases.</p>
+        <hr class="my-4 bg-white">
+        <p>Manage your inventory efficiently with real-time tracking, detailed reports, and intuitive controls.</p>
+        <a class="btn btn-light btn-lg" href="{% url 'stock_list' %}" role="button">View Stocks</a>
+        <a class="btn btn-outline-light btn-lg ml-2" href="{% url 'add_stock' %}" role="button">Add New Stock</a>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">📦 Stock Management</h5>
+              <p class="card-text">Add, update, and delete stock items with ease. Track quantities, categories, and reorder levels.</p>
+              <a href="{% url 'stock_list' %}" class="btn btn-primary">Manage Stocks</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">📊 Stock Details</h5>
+              <p class="card-text">View comprehensive stock details including purchase history, sales records, and transaction logs.</p>
+              <a href="{% url 'stock_details' %}" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">🛒 Sales & Purchases</h5>
+              <p class="card-text">Record sales and purchases, track inventory changes, and maintain detailed transaction history.</p>
+              <a href="{% url 'stock_list' %}" class="btn btn-primary">Get Started</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Key Features</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <ul class="list-unstyled">
+                <li>✅ User authentication and authorization</li>
+                <li>✅ Full CRUD operations for stock management</li>
+                <li>✅ Category-based organization</li>
+                <li>✅ Reorder level alerts</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul class="list-unstyled">
+                <li>✅ Purchase and sales tracking</li>
+                <li>✅ CSV export functionality</li>
+                <li>✅ Responsive Bootstrap 5 UI</li>
+                <li>✅ Production-ready deployment</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Technologies Used</h5>
+          <span class="badge badge-primary p-2 m-1">Django 5.0.6</span>
+          <span class="badge badge-primary p-2 m-1">PostgreSQL</span>
+          <span class="badge badge-primary p-2 m-1">Bootstrap 5</span>
+          <span class="badge badge-primary p-2 m-1">Gunicorn</span>
+          <span class="badge badge-primary p-2 m-1">WhiteNoise</span>
+          <span class="badge badge-primary p-2 m-1">Railway</span>
+        </div>
+      </div>
     </main>
   </div>
 </div>
