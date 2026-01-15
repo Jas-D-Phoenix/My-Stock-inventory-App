@@ -10,7 +10,7 @@ class Command(BaseCommand):
         self.stdout.write('Clearing existing data...')
         Stock.objects.all().delete()
         Category.objects.all().delete()
-        
+
         # Create demo user if it doesn't exist
         demo_user, created = User.objects.get_or_create(
             username='demo',
@@ -36,7 +36,7 @@ class Command(BaseCommand):
             'Fertilizers',
             'Tools'
         ]
-        
+
         categories = {}
         for cat_name in categories_data:
             category, created = Category.objects.get_or_create(category_name=cat_name)
